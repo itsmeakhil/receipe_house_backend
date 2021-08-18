@@ -1,0 +1,6 @@
+-r base.txt
+# coverage
+# tox
+# Sphinx
+# flake8
+pytest
