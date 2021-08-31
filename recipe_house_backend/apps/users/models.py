@@ -39,6 +39,7 @@ class User(AbstractUser):
     """
     username = None
     email = models.EmailField(_('email address'), unique=True)
+    uid = models.CharField(unique=True,max_length=100,null=True,blank=True)
     role = models.ForeignKey(Role, null=True, blank=True, on_delete=models.SET_NULL)
     is_deleted = models.BooleanField(default=False)
     is_verified = models.BooleanField(default=False)

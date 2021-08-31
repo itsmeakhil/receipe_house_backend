@@ -50,7 +50,7 @@ class Blog(models.Model):
     featured_image = models.URLField(max_length=500, null=True, blank=True)
     preparation_time = models.CharField(max_length=255, null=True, blank=True)
     ingredients = ArrayField(models.CharField(max_length=255, null=True, blank=True),null=True,blank=True)
-    preparation = ArrayField(models.TextField(max_length=255, null=True, blank=True),null=True,blank=True)
+    preparation = ArrayField(models.TextField(max_length=2000, null=True, blank=True),null=True,blank=True)
     serves = models.IntegerField(null=True, blank=True)
     type = models.ForeignKey(BlogType, blank=True, null=True, on_delete=models.SET_NULL)
     tags = models.ManyToManyField(Tag, blank=True)

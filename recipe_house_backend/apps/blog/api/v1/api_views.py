@@ -35,7 +35,7 @@ class BlogViewSet(viewsets.ModelViewSet):
     serializer_class = BlogSerializer
     http_method_names = ['get', 'post', 'patch', 'head', 'options', 'put']
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('title', 'eng_title')
+    search_fields = ('title')
 
     def perform_destroy(self, instance):
         soft_delete_model_instance(instance, self.request.user)

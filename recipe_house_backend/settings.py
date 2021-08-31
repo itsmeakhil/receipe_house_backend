@@ -8,10 +8,8 @@ from dotenv import load_dotenv
 # Load the .env file  and interpolate the values to environment  variables
 load_dotenv()
 # Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '-8ugc!z$%*9v6_^su6j6qagn!j^2uo7ye35igwtd57&ur_j(6u'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -100,6 +98,19 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+# REST api
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': int(os.getenv('PAGE_SIZE', 10)),
+    'SEARCH_PARAM': 'q'  # apply on SearchFilter
+}
 
 # Internationalization
 
