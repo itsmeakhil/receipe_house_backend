@@ -8,7 +8,7 @@ from rest_framework import routers
 
 # from recipe_house_backend.apps.file_upload.api.v1.urls import upload_router
 from recipe_house_backend.apps.blog.api.v1.urls import blog_router
-from recipe_house_backend.apps.users.api.v1.api_views import TokenRefreshView, activate, UserLogin
+from recipe_house_backend.apps.users.api.v1.api_views import TokenRefreshView, UserLogin, FirebaseLogin
 from recipe_house_backend.apps.users.api.v1.urls import user_router
 
 schema_view = get_schema_view(
@@ -40,9 +40,8 @@ urlpatterns = [
     # simpleJWT urls
     # url(r'^api/v1/login/$', TokenObtainView, name='login'),
     url(r'^api/v1/login/$', UserLogin.as_view(), name='login'),
-    url(r'^api/v1/token/refresh/$', TokenRefreshView, name='token_refresh'),
-    url(r'^api/v1/users/activate/(?P<uidb64>[0-9A-Za-z_\-]+)/(?P<token>[0-9A-Za-z]{1,13}-[0-9A-Za-z]{1,20})/$',
-        activate, name='activate'),
+    url(r'^api/v1/firebase/login/$', FirebaseLogin.as_view(), name='firebase-login'),
+
     # apps
     url(api_prefix, include(router.urls)),
 

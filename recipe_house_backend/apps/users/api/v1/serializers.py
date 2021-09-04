@@ -66,10 +66,8 @@ class UserSerializer(serializers.ModelSerializer):
         if 'last_name' in validated_data:
             instance.last_name = validated_data['last_name']
 
-        # if 'roles' in validated_data:
-        #     requested_roles = validated_data["roles"]
-        #     for role in requested_roles:
-        #         instance.roles.add(role.id)
+        if 'role' in validated_data:
+            instance.role=validated_data['role']
         if 'password' in validated_data:
             instance.set_password(validated_data['password'])
 

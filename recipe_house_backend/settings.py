@@ -31,7 +31,6 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_filters',
     'corsheaders',
-    'django_summernote',
 
     'recipe_house_backend.apps.users',
     'recipe_house_backend.apps.file_upload',
