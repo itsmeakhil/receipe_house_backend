@@ -7,10 +7,9 @@ from dotenv import load_dotenv
 
 # Load the .env file  and interpolate the values to environment  variables
 load_dotenv()
-# Quick-start development settings - unsuitable for production
 
 SECRET_KEY = os.getenv('SECRET_KEY')
-
+FCM_TOKEN = 'dsbsdcscsakjbncasbkcasbkjdsbksdkjkjcdbkbdchkbcddkjKsncanojacsnj'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -33,7 +32,6 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'recipe_house_backend.apps.users',
-    'recipe_house_backend.apps.file_upload',
     'recipe_house_backend.apps.blog',
 ]
 
@@ -68,8 +66,6 @@ TEMPLATES = [
 WSGI_APPLICATION = 'recipe_house_backend.wsgi.application'
 
 # Database
-# https://docs.djangoproject.com/en/3.1/ref/settings/#databases
-# Database
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -80,9 +76,8 @@ DATABASES = {
         'PORT': os.getenv('POSTGRES_PORT', ''),
     }
 }
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
+# Password validation
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -98,7 +93,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-# REST api
+# REST API
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.TokenAuthentication',

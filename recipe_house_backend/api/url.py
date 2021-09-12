@@ -6,9 +6,8 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework import routers
 
-# from recipe_house_backend.apps.file_upload.api.v1.urls import upload_router
 from recipe_house_backend.apps.blog.api.v1.urls import blog_router
-from recipe_house_backend.apps.users.api.v1.api_views import TokenRefreshView, UserLogin, FirebaseLogin
+from recipe_house_backend.apps.users.api.v1.api_views import  UserLogin, FirebaseLogin
 from recipe_house_backend.apps.users.api.v1.urls import user_router
 
 schema_view = get_schema_view(
@@ -29,20 +28,19 @@ router = routers.DefaultRouter()
 
 router.registry.extend(user_router.registry)
 router.registry.extend(blog_router.registry)
-# router.registry.extend(upload_router.registry)
 
 urlpatterns = [
-    # swagger Api doc
-    url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-
-    # simpleJWT urls
-    # url(r'^api/v1/login/$', TokenObtainView, name='login'),
-    url(r'^api/v1/login/$', UserLogin.as_view(), name='login'),
+    url(r'^api/v1/admin/login/$', UserLogin.as_view(), name='login'),
     url(r'^api/v1/firebase/login/$', FirebaseLogin.as_view(), name='firebase-login'),
 
     # apps
     url(api_prefix, include(router.urls)),
 
+]
+
+# Swagger API DOC
+api_doc_url = [
+    url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]

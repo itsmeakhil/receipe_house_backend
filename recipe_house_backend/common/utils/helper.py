@@ -11,7 +11,6 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from rest_framework.renderers import JSONRenderer
 from rest_framework.utils import json
 
-from recipe_house_backend.common.db.elasticsearch.client import ElasticSearchClient
 
 MESSAGE_FIELD_REQUIRED = "This field is required"
 
@@ -43,17 +42,6 @@ def get_dict_from_serializer(serializer_data):
 
 def get_value_or_none(dict, key):
     return dict.get(key) if key in dict else None
-
-
-def connect_to_elasticsearch():
-    """
-    Function to check elastic search connection,
-     if not connected throws environmental error.
-    """
-    es = ElasticSearchClient.get_client()
-    if not es.ping():
-        raise EnvironmentError(
-            'Django server was unable to start due to, Error connecting to Elasticsearch ')  # noqa: E501
 
 
 def encode_uid(pk):

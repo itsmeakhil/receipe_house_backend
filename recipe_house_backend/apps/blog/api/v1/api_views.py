@@ -3,9 +3,11 @@ from rest_framework import viewsets
 
 from recipe_house_backend.apps.blog.api.v1.serializers import (
     TagSerializer,
-    BlogSerializer
+    BlogSerializer,
+    CuisineSerializer,
+    CategorySerializer
 )
-from recipe_house_backend.apps.blog.models import Tag, Blog
+from recipe_house_backend.apps.blog.models import Tag, Blog,Category,Cuisine
 from recipe_house_backend.common.utils.helper import soft_delete_model_instance
 
 
@@ -17,11 +19,35 @@ class TagViewSet(viewsets.ModelViewSet):
     serializer_class = TagSerializer
     http_method_names = ['get', 'post', 'patch', 'head', 'options', 'put']
     filter_backends = (filters.SearchFilter,)
-
     search_fields = ('name',)
 
-    def perform_destroy(self, instance):
-        soft_delete_model_instance(instance, self.request.user)
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+
+class CategoryViewSet(viewsets.ModelViewSet):
+    """
+    ModelViewSet Class for Category
+    """
+    queryset = Category.objects.get_all_active()
+    serializer_class = CategorySerializer
+    http_method_names = ['get', 'post', 'patch', 'head', 'options', 'put']
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+
+class CuisineViewSet(viewsets.ModelViewSet):
+    """
+    ModelViewSet Class for Cuisine
+    """
+    queryset = Tag.objects.get_all_active()
+    serializer_class = CuisineSerializer
+    http_method_names = ['get', 'post', 'patch', 'head', 'options', 'put']
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
@@ -35,7 +61,7 @@ class BlogViewSet(viewsets.ModelViewSet):
     serializer_class = BlogSerializer
     http_method_names = ['get', 'post', 'patch', 'head', 'options', 'put']
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('title')
+    search_fields = ('title',)
 
     def perform_destroy(self, instance):
         soft_delete_model_instance(instance, self.request.user)

@@ -49,7 +49,6 @@ class UserLoginService:
                 return response_helper.http_400('User data validation error', serializer.errors)
             return response_helper.http_404('Firebase user not found')
         except Exception as e:
-            logger.exception("Internal server error occurred", e)
             return response_helper.http_500(f"Internal server error occurred : {e}")
 
     def logout(request):
