@@ -1,0 +1,17 @@
+Django==3.0.4
+djangorestframework==3.11.0
+python-dotenv==0.12.0
+django-cors-headers==3.2.1
+six==1.14.0
+uritemplate==3.0.1
+django-rest-swagger==2.2.0
+drf-yasg==1.17.1
+psycopg2-binary==2.8.6
+Pillow==8.1.0
+django-filter==2.4.0
+boto3==1.16.61
+google-search-results==2.0.0
+firebase-admin==4.5.2
+gunicorn==20.0.4
+django-storages
+django-crontab==0.7.1

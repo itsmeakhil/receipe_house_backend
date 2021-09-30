@@ -1,13 +1,13 @@
 from rest_framework import filters
 from rest_framework import viewsets
 
-from recipe_house_backend.apps.blog.api.v1.serializers import (
+from recipe_house_backend.apps.post.api.v1.serializers import (
     TagSerializer,
-    BlogSerializer,
     CuisineSerializer,
-    CategorySerializer
+    CategorySerializer,
+    PostSerializer
 )
-from recipe_house_backend.apps.blog.models import Tag, Blog,Category,Cuisine
+from recipe_house_backend.apps.post.models import Tag, Post,Category,Cuisine
 from recipe_house_backend.common.utils.helper import soft_delete_model_instance
 
 
@@ -43,7 +43,7 @@ class CuisineViewSet(viewsets.ModelViewSet):
     """
     ModelViewSet Class for Cuisine
     """
-    queryset = Tag.objects.get_all_active()
+    queryset = Cuisine.objects.get_all_active()
     serializer_class = CuisineSerializer
     http_method_names = ['get', 'post', 'patch', 'head', 'options', 'put']
     filter_backends = (filters.SearchFilter,)
@@ -53,12 +53,12 @@ class CuisineViewSet(viewsets.ModelViewSet):
         serializer.save(created_by=self.request.user)
 
 
-class BlogViewSet(viewsets.ModelViewSet):
+class PostViewSet(viewsets.ModelViewSet):
     """
-    ModelViewSet Class for Blog
+    ModelViewSet Class for Post
     """
-    queryset = Blog.objects.get_by_filter()
-    serializer_class = BlogSerializer
+    queryset = Post.objects.get_by_filter()
+    serializer_class = PostSerializer
     http_method_names = ['get', 'post', 'patch', 'head', 'options', 'put']
     filter_backends = (filters.SearchFilter,)
     search_fields = ('title',)

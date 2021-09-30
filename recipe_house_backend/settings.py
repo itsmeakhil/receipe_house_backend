@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'recipe_house_backend.apps.users',
-    'recipe_house_backend.apps.blog',
+    'recipe_house_backend.apps.post',
 ]
 
 MIDDLEWARE = [
@@ -113,15 +113,13 @@ LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kolkata'
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-STATIC_URL = '/static/'
-STATIC_ROOT = 'static/'
+
 
 AUTH_USER_MODEL = 'users.User'
 APPEND_SLASH = False
 API_PREFIX = os.getenv('API_PREFIX', '^api/v1/')
 X_FRAME_OPTIONS = 'SAMEORIGIN'
-CORS_ORIGIN_ALLOW_ALL = os.getenv('CORS_ORIGIN_ALLOW_ALL', True)
+CORS_ORIGIN_ALLOW_ALL = True
 
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
@@ -162,3 +160,25 @@ LOGGING = {
         }
     },
 }
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_DEFAULT_ACL = 'public-read'
+AWS_LOCATION = 'static'
+MEDIA_LOCATION = 'media'
+# Static files (CSS, JavaScript, Images)
+STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+
+# Use AWS_S3_ENDPOINT_URL here if you haven't enabled the CDN and got a custom domain.
+STATIC_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL,AWS_LOCATION)
+STATIC_ROOT = 'static/'
+MEDIA_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL,MEDIA_LOCATION)
+MEDIA_ROOT = 'media/'
+

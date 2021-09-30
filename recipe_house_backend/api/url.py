@@ -6,9 +6,9 @@ from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from rest_framework import routers
 
-from recipe_house_backend.apps.blog.api.v1.urls import blog_router
-from recipe_house_backend.apps.users.api.v1.api_views import  UserLogin, FirebaseLogin
+from recipe_house_backend.apps.users.api.v1.api_views import UserLogin, FirebaseLogin
 from recipe_house_backend.apps.users.api.v1.urls import user_router
+from recipe_house_backend.apps.post.api.v1.urls import post_router
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -27,7 +27,7 @@ api_prefix = settings.API_PREFIX
 router = routers.DefaultRouter()
 
 router.registry.extend(user_router.registry)
-router.registry.extend(blog_router.registry)
+router.registry.extend(post_router.registry)
 
 urlpatterns = [
     url(r'^api/v1/admin/login/$', UserLogin.as_view(), name='login'),

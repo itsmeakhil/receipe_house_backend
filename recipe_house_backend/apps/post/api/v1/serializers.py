@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from recipe_house_backend.apps.blog.models import Tag, Blog, Category, Cuisine
+from recipe_house_backend.apps.post.models import Tag, Post, Category, Cuisine
 
 
 class TagSerializer(serializers.ModelSerializer):
@@ -33,11 +33,11 @@ class CuisineSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class BlogSerializer(serializers.ModelSerializer):
+class PostSerializer(serializers.ModelSerializer):
     """
     Serializer for Blog model
     """
 
     class Meta(object):
-        model = Blog
+        model = Post
         fields = '__all__'
