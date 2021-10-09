@@ -26,6 +26,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'rest_framework.authtoken',
     'rest_framework_swagger',
     'drf_yasg',
     'django_filters',
@@ -160,25 +161,29 @@ LOGGING = {
         }
     },
 }
-
-AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
-AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
-AWS_S3_OBJECT_PARAMETERS = {
-    'CacheControl': 'max-age=86400',
-}
-AWS_DEFAULT_ACL = 'public-read'
-AWS_LOCATION = 'static'
-MEDIA_LOCATION = 'media'
-# Static files (CSS, JavaScript, Images)
-STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+#
+# AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+# AWS_S3_REGION_NAME = os.getenv('AWS_S3_REGION_NAME')
+# AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+# AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+# AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
+# AWS_S3_OBJECT_PARAMETERS = {
+#     'CacheControl': 'max-age=86400',
+# }
+# AWS_DEFAULT_ACL = 'public-read'
+# AWS_LOCATION = 'static'
+# MEDIA_LOCATION = 'media'
+# # Static files (CSS, JavaScript, Images)
+# STATICFILES_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+# DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 
 # Use AWS_S3_ENDPOINT_URL here if you haven't enabled the CDN and got a custom domain.
-STATIC_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL,AWS_LOCATION)
-STATIC_ROOT = 'static/'
-MEDIA_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL,MEDIA_LOCATION)
-MEDIA_ROOT = 'media/'
+# STATIC_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL,AWS_LOCATION)
+# STATIC_ROOT = 'static/'
+# MEDIA_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL,MEDIA_LOCATION)
+# MEDIA_ROOT = 'media/'
+STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(STATIC_ROOT, 'media')
 

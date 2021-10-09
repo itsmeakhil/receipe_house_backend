@@ -56,6 +56,7 @@ class Post(models.Model):
     )
     title = models.CharField(max_length=255, null=True, blank=True)
     image = models.ImageField(upload_to='media/images/post', null=True, blank=True)
+    image_url = models.URLField(max_length=255, null=True, blank=True)
     preparation_time = models.CharField(max_length=255, null=True, blank=True)
     ingredients = ArrayField(JSONField(default=dict, null=True, blank=True), null=True, blank=True)
     preparation = ArrayField(JSONField(null=True, blank=True, default=dict), null=True, blank=True)

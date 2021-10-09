@@ -30,6 +30,9 @@ router.registry.extend(user_router.registry)
 router.registry.extend(post_router.registry)
 
 urlpatterns = [
+ url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     url(r'^api/v1/admin/login/$', UserLogin.as_view(), name='login'),
     url(r'^api/v1/firebase/login/$', FirebaseLogin.as_view(), name='firebase-login'),
 
@@ -38,9 +41,9 @@ urlpatterns = [
 
 ]
 
-# Swagger API DOC
-api_doc_url = [
-    url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
-    url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
-    url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-]
+# # Swagger API DOC
+# api_doc_url = [
+#     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+#     url(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+#     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+# ]

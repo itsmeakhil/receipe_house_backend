@@ -83,14 +83,10 @@ class UserDetailsSerializer(serializers.ModelSerializer):
 
     class Meta(object):
         model = User
-        fields = (
-            'id',
-            'email',
-            'first_name',
-            'last_name',
-            'role',
-            'is_verified'
-        )
+        fields = '__all__'
+        extra_kwargs = {
+            'password': {'write_only': True}
+        }
 
 
 class EmailSerializer(serializers.Serializer):
