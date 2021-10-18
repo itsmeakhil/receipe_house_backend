@@ -10,7 +10,8 @@ from recipe_house_backend.common.utils.base_manager import BaseManager
 class Category(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
-
+    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     objects = BaseManager()
 
     def __str__(self):
@@ -23,7 +24,8 @@ class Category(models.Model):
 class Cuisine(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
-
+    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     objects = BaseManager()
 
     def __str__(self):
@@ -36,7 +38,7 @@ class Cuisine(models.Model):
 class Tag(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     objects = BaseManager()
 
