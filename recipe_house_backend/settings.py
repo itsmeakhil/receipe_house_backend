@@ -171,5 +171,4 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 # Use AWS_S3_ENDPOINT_URL here if you haven't enabled the CDN and got a custom domain.
 STATIC_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL, AWS_LOCATION)
 STATIC_ROOT = 'production/static/'
-MEDIA_URL = '{}/{}/{}/'.format(AWS_S3_ENDPOINT_URL, AWS_LOCATION, MEDIA_LOCATION)
-MEDIA_ROOT = 'media/'
+
