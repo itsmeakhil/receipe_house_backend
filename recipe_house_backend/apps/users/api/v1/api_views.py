@@ -62,7 +62,7 @@ class UserViewSet(viewsets.ModelViewSet):
 
         except Exception as e:
             logger.error("Unable to change password", e)
-            return response_helper.http_500('Unable to change password due to Internal Server Error', e)
+            return response_helper.http_500('Unable to change password due to Internal Server Error', e.__str__())
 
 
 @permission_classes((AllowAny,))
@@ -71,28 +71,21 @@ class UserLogin(APIView):
     def post(self, request):
         try:
             email = request.data['email']
-            print(email)
             password = request.data['password']
             user = authenticate(email=email, password=password)
-            print(user.id)
             if user is None:
                 return response_helper.http_400_message('Unable to login, Please check email or password.')
             if not user.is_verified:
-                print('sklijojlisgrjljvd')
                 return response_helper.http_400_message('Please verify the user and the try again.')
-            print('dsnnksgdnkslj')
-            print(Token.objects.get_or_create(user=user))
-            print('dsnnksgdnkslj')
             token, _ = Token.objects.get_or_create(user=user)
-            print(token.key)
-            user_data = UserDetailsSerializer(user,many=False)
+            user_data = UserDetailsSerializer(user, many=False)
             response = {
                 "token": token.key,
                 "user_data": user_data.data
             }
             return response_helper.http_200('User login successfull', response)
         except Exception as e:
-            return response_helper.http_500('Unable to login to admin panel due to Internal Server Error', e)
+            return response_helper.http_500('Unable to login to admin panel due to Internal Server Error', e.__str__())
 
 
 @permission_classes((AllowAny,))
@@ -102,4 +95,4 @@ class FirebaseLogin(APIView):
         try:
             return UserLoginService.verify_firebase_user(self)
         except Exception as e:
-            return response_helper.http_500('Internal server error occurred while login with firebase', e)
+            return response_helper.http_500('Internal server error occurred while login with firebase', e.__str__())

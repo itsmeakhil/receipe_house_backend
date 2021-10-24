@@ -33,6 +33,7 @@ INSTALLED_APPS = [
 
     'recipe_house_backend.apps.users',
     'recipe_house_backend.apps.post',
+    'recipe_house_backend.apps.favourites',
 ]
 
 MIDDLEWARE = [
@@ -103,7 +104,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': int(os.getenv('PAGE_SIZE', 10)),
+    'PAGE_SIZE': 20,
     'SEARCH_PARAM': 'q'  # apply on SearchFilter
 }
 
@@ -120,15 +121,6 @@ API_PREFIX = os.getenv('API_PREFIX', '^api/v1/')
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 CORS_ORIGIN_ALLOW_ALL = True
 
-SWAGGER_SETTINGS = {
-    'SECURITY_DEFINITIONS': {
-        'Bearer': {
-            'type': 'apiKey',
-            'name': 'Authorization',
-            'in': 'header'
-        }
-    }
-}
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

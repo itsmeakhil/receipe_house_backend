@@ -7,7 +7,7 @@ from recipe_house_backend.apps.post.api.v1.serializers import (
     CategorySerializer,
     PostSerializer
 )
-from recipe_house_backend.apps.post.models import Tag, Post,Category,Cuisine
+from recipe_house_backend.apps.post.models import Tag, Post, Category, Cuisine
 from recipe_house_backend.common.utils.helper import soft_delete_model_instance
 
 

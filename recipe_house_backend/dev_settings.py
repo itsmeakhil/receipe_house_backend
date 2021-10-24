@@ -33,6 +33,8 @@ INSTALLED_APPS = [
 
     'recipe_house_backend.apps.users',
     'recipe_house_backend.apps.post',
+    'recipe_house_backend.apps.favourites',
+
 ]
 
 MIDDLEWARE = [
