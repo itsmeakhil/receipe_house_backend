@@ -19,7 +19,9 @@ class Category(models.Model):
 
     class Meta:
         db_table = 'CATEGORY'
-
+        indexes = [
+            models.Index(fields=['name']),
+        ]
 
 class Cuisine(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
@@ -33,13 +35,16 @@ class Cuisine(models.Model):
 
     class Meta:
         db_table = 'CUISINE'
-
+        indexes = [
+            models.Index(fields=['name']),
+        ]
 
 class Tag(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
     created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+
     objects = BaseManager()
 
     def __str__(self):
@@ -47,7 +52,9 @@ class Tag(models.Model):
 
     class Meta:
         db_table = 'TAG'
-
+        indexes = [
+            models.Index(fields=['name' ]),
+        ]
 
 class Post(models.Model):
     ENGLISH = 2
@@ -80,3 +87,6 @@ class Post(models.Model):
 
     class Meta:
         db_table = 'POST'
+        indexes = [
+            models.Index(fields=['title']),
+        ]
