@@ -77,7 +77,7 @@ class Post(models.Model):
     is_published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
     updated_at = models.DateTimeField(auto_now_add=True)
-    created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL),
+    created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     language = models.IntegerField(choices=LANGUAGE_CHOICE, default=MALAYALAM)
 
     objects = BaseManager()
