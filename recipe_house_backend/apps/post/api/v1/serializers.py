@@ -17,6 +17,16 @@ class TagSerializer(serializers.ModelSerializer):
         return obj.created_by.email
 
 
+class TagNameSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Tag model
+    """
+
+    class Meta(object):
+        model = Tag
+        fields = ('name',)
+
+
 class CategorySerializer(serializers.ModelSerializer):
     """
     Serializer for Category model
@@ -29,6 +39,17 @@ class CategorySerializer(serializers.ModelSerializer):
 
     def get_created_by_name(self, obj):
         return obj.created_by.email
+
+
+class CategoryNameSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Category model
+    """
+
+    class Meta(object):
+        model = Category
+        fields = ('name',)
+
 
 
 class CuisineSerializer(serializers.ModelSerializer):
@@ -49,7 +70,29 @@ class PostSerializer(serializers.ModelSerializer):
     """
     Serializer for Blog model
     """
+    created_by_name = serializers.SerializerMethodField()
 
     class Meta(object):
         model = Post
         fields = '__all__'
+
+    def get_created_by_name(self, obj):
+        return obj.created_by.username
+
+
+class PostListSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Blog model
+    """
+    created_by_name = serializers.SerializerMethodField()
+    tag_name = serializers.SerializerMethodField()
+    tags = TagNameSerializer(many=True)
+    category = CategoryNameSerializer(many=True)
+
+    class Meta(object):
+        model = Post
+        fields = '__all__'
+
+    def get_created_by_name(self, obj):
+        return obj.created_by.username
+
