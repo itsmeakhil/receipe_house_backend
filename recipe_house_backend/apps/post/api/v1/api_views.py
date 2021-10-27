@@ -68,7 +68,8 @@ class PostViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
     def get_serializer_class(self):
-        if self.action in ['list']:
+        if self.action in ['list', 'retrieve']:
             return PostListSerializer
         return self.serializer_class
