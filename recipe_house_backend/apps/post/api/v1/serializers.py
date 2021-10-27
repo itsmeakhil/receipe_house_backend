@@ -51,7 +51,6 @@ class CategoryNameSerializer(serializers.ModelSerializer):
         fields = ('name',)
 
 
-
 class CuisineSerializer(serializers.ModelSerializer):
     """
     Serializer for Cuisine model
@@ -85,6 +84,7 @@ class PostListSerializer(serializers.ModelSerializer):
     Serializer for Blog model
     """
     created_by_name = serializers.SerializerMethodField()
+    cuisine_name = serializers.SerializerMethodField()
     tags = TagNameSerializer(many=True)
     category = CategoryNameSerializer(many=True)
 
@@ -95,3 +95,5 @@ class PostListSerializer(serializers.ModelSerializer):
     def get_created_by_name(self, obj):
         return obj.created_by.username
 
+    def get_cuisine_name(self, obj):
+        return obj.cuisine.name
