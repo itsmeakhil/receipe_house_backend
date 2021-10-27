@@ -5,7 +5,7 @@ from recipe_house_backend.apps.post.api.v1.serializers import (
     TagSerializer,
     CuisineSerializer,
     CategorySerializer,
-    PostSerializer, PostListSerializer
+    PostSerializer, PostListSerializer, TagUpdateSerializer, CategoryUpdateSerializer, CuisineUpdateSerializer
 )
 from recipe_house_backend.apps.post.models import Tag, Post, Category, Cuisine
 from recipe_house_backend.common.utils.helper import soft_delete_model_instance
@@ -24,6 +24,11 @@ class TagViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
+    def get_serializer_class(self):
+        if self.action in ['update', 'partial_update']:
+            return TagUpdateSerializer
+        return self.serializer_class
+
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
@@ -38,6 +43,11 @@ class CategoryViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
+    def get_serializer_class(self):
+        if self.action in ['update', 'partial_update']:
+            return CategoryUpdateSerializer
+        return self.serializer_class
+
 
 class CuisineViewSet(viewsets.ModelViewSet):
     """
@@ -51,6 +61,11 @@ class CuisineViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action in ['update', 'partial_update']:
+            return CuisineUpdateSerializer
+        return self.serializer_class
 
 
 class PostViewSet(viewsets.ModelViewSet):
