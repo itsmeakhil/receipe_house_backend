@@ -85,7 +85,6 @@ class PostListSerializer(serializers.ModelSerializer):
     Serializer for Blog model
     """
     created_by_name = serializers.SerializerMethodField()
-    tag_name = serializers.SerializerMethodField()
     tags = TagNameSerializer(many=True)
     category = CategoryNameSerializer(many=True)
 
