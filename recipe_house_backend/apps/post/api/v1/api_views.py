@@ -1,13 +1,16 @@
 from rest_framework import filters
 from rest_framework import viewsets
+from rest_framework.views import APIView
 
 from recipe_house_backend.apps.post.api.v1.serializers import (
     TagSerializer,
     CuisineSerializer,
     CategorySerializer,
-    PostSerializer, PostListSerializer, TagUpdateSerializer, CategoryUpdateSerializer, CuisineUpdateSerializer
+    PostSerializer, PostListSerializer, TagUpdateSerializer, CategoryUpdateSerializer, CuisineUpdateSerializer,
+    CuisineListSerializer, CategoryListSerializer, TagListSerializer
 )
 from recipe_house_backend.apps.post.models import Tag, Post, Category, Cuisine
+from recipe_house_backend.common.utils import response_helper
 from recipe_house_backend.common.utils.helper import soft_delete_model_instance
 
 
@@ -88,3 +91,16 @@ class PostViewSet(viewsets.ModelViewSet):
         if self.action in ['list', 'retrieve']:
             return PostListSerializer
         return self.serializer_class
+
+
+class PostAddMasterData(APIView):
+    def get(self, request):
+        tags = Tag.objects.get_all_active()
+        category = Category.objects.get_all_active()
+        cuisine = Cuisine.objects.get_all_active()
+        data = {
+            'tags': TagListSerializer(tags, many=True).data,
+            'category': CategoryListSerializer(category, many=True).data,
+            'cuisine': CuisineListSerializer(cuisine, many=True).data
+        }
+        return response_helper.http_200('Master data loaded', data)

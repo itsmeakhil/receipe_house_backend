@@ -7,9 +7,10 @@ from rest_framework import permissions
 from rest_framework import routers
 
 from recipe_house_backend.apps.favourites.api.v1.urls import favourite_post_router
+from recipe_house_backend.apps.post.api.v1.api_views import PostAddMasterData
+from recipe_house_backend.apps.post.api.v1.urls import post_router
 from recipe_house_backend.apps.users.api.v1.api_views import UserLogin, FirebaseLogin
 from recipe_house_backend.apps.users.api.v1.urls import user_router
-from recipe_house_backend.apps.post.api.v1.urls import post_router
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -34,6 +35,7 @@ router.registry.extend(favourite_post_router.registry)
 urlpatterns = [
     url(r'^api/v1/admin/login/$', UserLogin.as_view(), name='login'),
     url(r'^api/v1/firebase/login/$', FirebaseLogin.as_view(), name='firebase-login'),
+    url(r'^api/v1/post-master-data/$', PostAddMasterData.as_view(), name='post-master-data'),
 
     # apps
     url(api_prefix, include(router.urls)),

@@ -33,6 +33,16 @@ class TagUpdateSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class TagListSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Tag model
+    """
+
+    class Meta(object):
+        model = Tag
+        fields = ('id', 'name')
+
+
 class TagNameSerializer(serializers.ModelSerializer):
     """
     Serializer for Tag model
@@ -61,6 +71,16 @@ class CategorySerializer(serializers.ModelSerializer):
         if Category.objects.does_exist(name=data['name']):
             raise serializers.ValidationError('Category already exists')
         return data
+
+
+class CategoryListSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Category model
+    """
+
+    class Meta(object):
+        model = Category
+        fields = ('id', 'name')
 
 
 class CategoryUpdateSerializer(serializers.ModelSerializer):
@@ -111,6 +131,16 @@ class CuisineUpdateSerializer(serializers.ModelSerializer):
     class Meta(object):
         model = Cuisine
         fields = '__all__'
+
+
+class CuisineListSerializer(serializers.ModelSerializer):
+    """
+    Serializer for Cuisine model
+    """
+
+    class Meta(object):
+        model = Cuisine
+        fields = ('id', 'name')
 
 
 class PostSerializer(serializers.ModelSerializer):
