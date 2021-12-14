@@ -1,19 +1,25 @@
 from django.contrib import admin
 from django.contrib.postgres.fields import ArrayField, JSONField
 from django.forms.widgets import Textarea
+from import_export.admin import ImportExportModelAdmin
 
 from recipe_house_backend.apps.post.models import Cuisine, Post, Tag, Category
+from recipe_house_backend.apps.post.admin_resource import CategoryResource, TagResource, CuisineResource
 
 
-class CuisineAdmin(admin.ModelAdmin):
+class CuisineAdmin(ImportExportModelAdmin):
+    resource_class = CuisineResource
     list_display = ('id', 'name',)
 
 
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(ImportExportModelAdmin):
+    resource_class = CategoryResource
+
     list_display = ('id', 'name',)
 
 
-class TagAdmin(admin.ModelAdmin):
+class TagAdmin(ImportExportModelAdmin):
+    resource_class = TagResource
     list_display = ('id', 'name',)
 
 

@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'drf_yasg',
     'django_filters',
     'corsheaders',
+    'import_export',
 
     'recipe_house_backend.apps.users',
     'recipe_house_backend.apps.post',
@@ -118,7 +119,7 @@ USE_TZ = True
 AUTH_USER_MODEL = 'users.User'
 APPEND_SLASH = False
 API_PREFIX = os.getenv('API_PREFIX', '^api/v1/')
-X_FRAME_OPTIONS = 'SAMEORIGIN'
+# X_FRAME_OPTIONS = 'SAMEORIGIN'
 CORS_ORIGIN_ALLOW_ALL = True
 
 LOGGING = {
