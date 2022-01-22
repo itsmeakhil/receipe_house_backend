@@ -1,6 +1,6 @@
 from import_export import resources
 
-from app.post.models import Tag, Cuisine, Category
+from recipe_house_backend.apps.post.models import Tag, Cuisine, Category, PostType
 
 
 class TagResource(resources.ModelResource):
@@ -16,4 +16,10 @@ class CategoryResource(resources.ModelResource):
 class CuisineResource(resources.ModelResource):
     class Meta:
         model = Cuisine
+
+
+
+class PostTypeResource(resources.ModelResource):
+    class Meta:
+        model = PostType
 

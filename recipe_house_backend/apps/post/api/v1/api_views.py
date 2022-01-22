@@ -6,12 +6,14 @@ from recipe_house_backend.apps.post.api.v1.serializers import (
     TagSerializer,
     CuisineSerializer,
     CategorySerializer,
-    PostSerializer, PostListSerializer, TagUpdateSerializer, CategoryUpdateSerializer, CuisineUpdateSerializer,
-    CuisineListSerializer, CategoryListSerializer, TagListSerializer
+    PostSerializer, PostListAdminSerializer, TagUpdateSerializer, CategoryUpdateSerializer, CuisineUpdateSerializer,
+    CuisineListSerializer, CategoryListSerializer, TagListSerializer, PostDetailsSerializer, PostTypeSerializer,
+    PostTypeUpdateSerializer
 )
-from recipe_house_backend.apps.post.models import Tag, Post, Category, Cuisine
+from recipe_house_backend.apps.post.models import Tag, Post, Category, Cuisine, PostType
 from recipe_house_backend.common.utils import response_helper
 from recipe_house_backend.common.utils.helper import soft_delete_model_instance
+from recipe_house_backend.common.utils.permissions import IsOwnerOrReadOnly
 
 
 class TagViewSet(viewsets.ModelViewSet):
@@ -70,6 +72,24 @@ class CuisineViewSet(viewsets.ModelViewSet):
             return CuisineUpdateSerializer
         return self.serializer_class
 
+class PostTypeViewSet(viewsets.ModelViewSet):
+    """
+    ModelViewSet Class for Cuisine
+    """
+    queryset = PostType.objects.get_all_active()
+    serializer_class = PostTypeSerializer
+    http_method_names = ['get', 'post', 'patch', 'head', 'options', 'put']
+    filter_backends = (filters.SearchFilter,)
+    search_fields = ('name',)
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+    def get_serializer_class(self):
+        if self.action in ['update', 'partial_update']:
+            return PostTypeUpdateSerializer
+        return self.serializer_class
+
 
 class PostViewSet(viewsets.ModelViewSet):
     """
@@ -77,9 +97,16 @@ class PostViewSet(viewsets.ModelViewSet):
     """
     queryset = Post.objects.get_by_filter()
     serializer_class = PostSerializer
+    permission_classes = [IsOwnerOrReadOnly]
     http_method_names = ['get', 'post', 'patch', 'head', 'options', 'put']
     filter_backends = (filters.SearchFilter,)
-    search_fields = ('title',)
+    search_fields = ('title', 'cuisine__name','tags')
+    serializer_action_classes = {
+        'list': PostListAdminSerializer,
+        'post': PostSerializer,
+        'retrieve': PostDetailsSerializer
+
+    }
 
     def perform_destroy(self, instance):
         soft_delete_model_instance(instance, self.request.user)
@@ -88,18 +115,30 @@ class PostViewSet(viewsets.ModelViewSet):
         serializer.save(created_by=self.request.user)
 
     def get_serializer_class(self):
-        if self.action in ['list', 'retrieve']:
-            return PostListSerializer
-        return self.serializer_class
+        try:
+            return self.serializer_action_classes[self.action]
+        except (KeyError, AttributeError):
+            return self.serializer_class
 
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        post_type = self.request.query_params.get('post-type', None)
+        cuisine = self.request.query_params.get('cuisine', None)
+        created_by = self.request.query_params.get('created-by', None)
+        if post_type:
+            queryset = queryset.filter(post_type=post_type)
+        if cuisine:
+            queryset = queryset.filter(cuisine=cuisine)
+        if created_by:
+            queryset = queryset.filter(created_by=self.request.user)
+
+        return queryset
 
 class PostAddMasterData(APIView):
     def get(self, request):
-        tags = Tag.objects.get_all_active()
         category = Category.objects.get_all_active()
         cuisine = Cuisine.objects.get_all_active()
         data = {
-            'tags': TagListSerializer(tags, many=True).data,
             'category': CategoryListSerializer(category, many=True).data,
             'cuisine': CuisineListSerializer(cuisine, many=True).data
         }

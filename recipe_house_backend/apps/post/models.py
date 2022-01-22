@@ -1,4 +1,5 @@
 # Create your models here.
+from ckeditor.fields import RichTextField
 from django.contrib.postgres.fields import ArrayField
 from django.contrib.postgres.fields import JSONField
 from django.db import models
@@ -39,6 +40,23 @@ class Cuisine(models.Model):
             models.Index(fields=['name']),
         ]
 
+class PostType(models.Model):
+    name = models.CharField(max_length=255, null=True, blank=True)
+    is_deleted = models.BooleanField(default=False)
+    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
+
+    objects = BaseManager()
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        db_table = 'POST_TYPE'
+        indexes = [
+            models.Index(fields=['name']),
+        ]
+
 class Tag(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
@@ -69,10 +87,12 @@ class Post(models.Model):
     preparation_time = models.CharField(max_length=255, null=True, blank=True)
     ingredients = ArrayField(JSONField(default=dict, null=True, blank=True), null=True, blank=True)
     preparation = ArrayField(JSONField(null=True, blank=True, default=dict), null=True, blank=True)
+    content = RichTextField()
     serves = models.IntegerField(null=True, blank=True)
-    tags = models.ManyToManyField(Tag, blank=True)
+    tags = models.TextField(null=True, blank=True)
     category = models.ManyToManyField(Category, blank=True)
     cuisine = models.ForeignKey(Cuisine, null=True, on_delete=models.SET_NULL)
+    post_type = models.ForeignKey(PostType, null=True, on_delete=models.SET_NULL)
     is_deleted = models.BooleanField(default=False)
     is_published = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True, editable=False)
@@ -88,5 +108,5 @@ class Post(models.Model):
     class Meta:
         db_table = 'POST'
         indexes = [
-            models.Index(fields=['title']),
+            models.Index(fields=['title','tags']),
         ]
