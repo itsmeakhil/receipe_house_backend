@@ -5,7 +5,7 @@ from django import forms
 from django.forms.widgets import Textarea
 from import_export.admin import ImportExportModelAdmin
 
-from recipe_house_backend.apps.post.models import Cuisine, Post, Tag, Category, PostType, Post12
+from recipe_house_backend.apps.post.models import Cuisine, Post, Tag, Category, PostType
 from recipe_house_backend.apps.post.admin_resource import CategoryResource, TagResource, CuisineResource, \
     PostTypeResource
 
@@ -55,4 +55,3 @@ admin.site.register(Category, CategoryAdmin)
 admin.site.register(Post, PostAdmin)
 admin.site.register(Tag, TagAdmin)
 admin.site.register(PostType, PostTypeAdmin)
-admin.site.register(Post12)
