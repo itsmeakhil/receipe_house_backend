@@ -32,7 +32,6 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'import_export',
-    'ckeditor',
 
     'recipe_house_backend.apps.users',
     'recipe_house_backend.apps.post',

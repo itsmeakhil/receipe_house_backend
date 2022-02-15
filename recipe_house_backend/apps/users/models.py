@@ -42,7 +42,7 @@ class User(AbstractUser):
     username = models.CharField(null=True, blank=True, unique=True,max_length=100)
     email = models.EmailField(_('email address'), unique=True)
     password = models.CharField(_('password'), max_length=128,null=True,blank=True)
-    uid = models.CharField(unique=True,max_length=100,null=True,blank=True)
+    uid = models.CharField(unique=True, max_length=100,null=True,blank=True)
     device_id = models.CharField(unique=True,max_length=100,null=True,blank=True)
     role = models.ForeignKey(Role, null=True, blank=True, on_delete=models.SET_NULL)
     is_deleted = models.BooleanField(default=False)

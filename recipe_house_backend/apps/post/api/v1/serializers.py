@@ -231,6 +231,7 @@ class PostListSerializer(serializers.ModelSerializer):
 class PostDetailsSerializer(serializers.ModelSerializer):
     """
     Serializer for Blog model
+
     """
     created_by_name = serializers.CharField(source='created_by.username')
     cuisine_name = serializers.CharField(source='cuisine.name')

@@ -1,7 +1,3 @@
-# Create your models here.
-from ckeditor.fields import RichTextField
-from django.contrib.postgres.fields import ArrayField
-from django.contrib.postgres.fields import JSONField
 from django.db import models
 
 from recipe_house_backend.apps.users.models import User
@@ -11,7 +7,7 @@ from recipe_house_backend.common.utils.base_manager import BaseManager
 class Category(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     objects = BaseManager()
 
@@ -24,10 +20,11 @@ class Category(models.Model):
             models.Index(fields=['name']),
         ]
 
+
 class Cuisine(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     objects = BaseManager()
 
@@ -40,10 +37,11 @@ class Cuisine(models.Model):
             models.Index(fields=['name']),
         ]
 
+
 class PostType(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
 
     objects = BaseManager()
@@ -57,10 +55,11 @@ class PostType(models.Model):
             models.Index(fields=['name']),
         ]
 
+
 class Tag(models.Model):
     name = models.CharField(max_length=255, null=True, blank=True)
     is_deleted = models.BooleanField(default=False)
-    created_at = models.DateTimeField(auto_now_add=True,null=True,blank=True)
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
     created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
 
     objects = BaseManager()
@@ -71,8 +70,9 @@ class Tag(models.Model):
     class Meta:
         db_table = 'TAG'
         indexes = [
-            models.Index(fields=['name' ]),
+            models.Index(fields=['name']),
         ]
+
 
 class Post(models.Model):
     ENGLISH = 2
@@ -85,9 +85,7 @@ class Post(models.Model):
     image = models.ImageField(upload_to='media/images/post', null=True, blank=True)
     image_url = models.URLField(max_length=255, null=True, blank=True)
     preparation_time = models.CharField(max_length=255, null=True, blank=True)
-    ingredients = ArrayField(JSONField(default=dict, null=True, blank=True), null=True, blank=True)
-    preparation = ArrayField(JSONField(null=True, blank=True, default=dict), null=True, blank=True)
-    content = RichTextField()
+    content = models.TextField()
     serves = models.IntegerField(null=True, blank=True)
     tags = models.TextField(null=True, blank=True)
     category = models.ManyToManyField(Category, blank=True)
@@ -108,5 +106,5 @@ class Post(models.Model):
     class Meta:
         db_table = 'POST'
         indexes = [
-            models.Index(fields=['title','tags']),
+            models.Index(fields=['title', 'tags']),
         ]

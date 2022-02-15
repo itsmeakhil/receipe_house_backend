@@ -2,4 +2,4 @@ from django.apps import AppConfig
 
 
 class RatingConfig(AppConfig):
-    name = 'rating'
+    name = 'recipe_house_backend.apps.rating'

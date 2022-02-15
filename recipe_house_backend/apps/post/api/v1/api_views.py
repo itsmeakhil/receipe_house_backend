@@ -95,7 +95,7 @@ class PostViewSet(viewsets.ModelViewSet):
     """
     ModelViewSet Class for Post
     """
-    queryset = Post.objects.get_by_filter()
+    queryset = Post.objects.get_all_active()
     serializer_class = PostSerializer
     permission_classes = [IsOwnerOrReadOnly]
     http_method_names = ['get', 'post', 'patch', 'head', 'options', 'put']
