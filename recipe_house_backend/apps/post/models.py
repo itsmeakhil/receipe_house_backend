@@ -81,6 +81,7 @@ class Post(models.Model):
         (ENGLISH, 'English'),
         (MALAYALAM, 'Malayalam')
     )
+
     title = models.CharField(max_length=255, null=True, blank=True)
     image = models.ImageField(upload_to='media/images/post', null=True, blank=True)
     image_url = models.URLField(max_length=255, null=True, blank=True)
@@ -97,6 +98,7 @@ class Post(models.Model):
     updated_at = models.DateTimeField(auto_now_add=True)
     created_by = models.ForeignKey(User, null=True, blank=True, on_delete=models.SET_NULL)
     language = models.IntegerField(choices=LANGUAGE_CHOICE, default=MALAYALAM)
+    views = models.PositiveIntegerField(null=True, blank=True)
 
     objects = BaseManager()
 

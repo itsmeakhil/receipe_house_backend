@@ -31,7 +31,7 @@ class Rating(models.Model):
     objects = BaseManager()
 
     def __str__(self):
-        return self.value
+        return self.post.__str__()
 
     class Meta:
         db_table = 'POST_RATING'
