@@ -121,7 +121,7 @@ USE_TZ = True
 
 AUTH_USER_MODEL = 'users.User'
 APPEND_SLASH = False
-API_PREFIX = os.getenv('API_PREFIX', '^api/v1/')
+API_PREFIX = os.getenv('API_PREFIX', 'api/v1/')
 X_FRAME_OPTIONS = 'SAMEORIGIN'
 CORS_ORIGIN_ALLOW_ALL = True
 SWAGGER_SETTINGS = {
