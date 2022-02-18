@@ -31,6 +31,7 @@ INSTALLED_APPS = [
     'django_filters',
     'corsheaders',
     'import_export',
+    'drf_api_logger',
 
     'recipe_house_backend.apps.users',
     'recipe_house_backend.apps.post',
@@ -48,8 +49,10 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'drf_api_logger.middleware.api_logger_middleware.APILoggerMiddleware',  # Add here
 
 ]
+
 
 ROOT_URLCONF = 'recipe_house_backend.urls'
 
@@ -122,8 +125,8 @@ USE_TZ = True
 AUTH_USER_MODEL = 'users.User'
 APPEND_SLASH = False
 API_PREFIX = os.getenv('API_PREFIX', 'api/v1/')
-X_FRAME_OPTIONS = 'SAMEORIGIN'
 CORS_ORIGIN_ALLOW_ALL = True
+CSRF_TRUSTED_ORIGINS=['http://localhost:3000','https://api.recipes.house']
 SWAGGER_SETTINGS = {
     'SECURITY_DEFINITIONS': {
         'Bearer': {
@@ -186,3 +189,5 @@ DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
 STATIC_URL = '{}/{}/'.format(AWS_S3_ENDPOINT_URL, AWS_LOCATION)
 STATIC_ROOT = 'production/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+DRF_API_LOGGER_DATABASE = True
+DRF_API_LOGGER_DEFAULT_DATABASE = 'recipes_house'  # Default to "default" if not specified

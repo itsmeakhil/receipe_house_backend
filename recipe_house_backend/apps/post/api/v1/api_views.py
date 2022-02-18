@@ -9,7 +9,7 @@ from recipe_house_backend.apps.post.api.v1.serializers import (
     CategorySerializer,
     PostSerializer, PostListAdminSerializer, TagUpdateSerializer, CategoryUpdateSerializer, CuisineUpdateSerializer,
     CuisineListSerializer, CategoryListSerializer, PostDetailsSerializer, PostTypeSerializer,
-    PostTypeUpdateSerializer, PostListSerializer
+    PostTypeUpdateSerializer, PostListSerializer, PostTypeListSerializer
 )
 from recipe_house_backend.apps.post.models import Tag, Post, Category, Cuisine, PostType
 from recipe_house_backend.common.utils import response_helper
@@ -161,8 +161,10 @@ class PostAddMasterData(APIView):
     def get(self, request):
         category = Category.objects.get_all_active()
         cuisine = Cuisine.objects.get_all_active()
+        post_type = PostType.objects.get_all_active()
         data = {
             'category': CategoryListSerializer(category, many=True).data,
-            'cuisine': CuisineListSerializer(cuisine, many=True).data
+            'cuisine': CuisineListSerializer(cuisine, many=True).data,
+            'post_type': PostTypeListSerializer(post_type, many=True).data
         }
         return response_helper.http_200('Master data loaded', data)
